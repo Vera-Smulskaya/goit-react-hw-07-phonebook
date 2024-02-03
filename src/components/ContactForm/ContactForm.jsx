@@ -7,7 +7,7 @@ import { addContact } from '../../redux/contacts/contacts.reducer';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const contacts = useSelector(state => state.contactsStore.contacts);
   const dispatch = useDispatch();
 
@@ -19,17 +19,17 @@ const ContactForm = () => {
     const finalContacts = {
       id: nanoid(),
       name,
-      number,
+      phone,
     };
     dispatch(addContact(finalContacts));
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    handleFormContact(name, number);
+    handleFormContact(name, phone);
   };
 
   const handleInputChange = event => {
@@ -41,8 +41,8 @@ const ContactForm = () => {
         setName(value);
         break;
       }
-      case 'number': {
-        setNumber(value);
+      case 'phone': {
+        setPhone(value);
         break;
       }
       default:
@@ -71,8 +71,8 @@ const ContactForm = () => {
           <input
             type="tel"
             className={css.formInput}
-            name="number"
-            value={number}
+            name="phone"
+            value={phone}
             onChange={handleInputChange}
             placeholder="Format: xxx-xxx-xx-xx"
             pattern="^\+?\d{1,4}[ .\-]?\(?\d{1,3}\)?[ .\-]?\d{1,4}[ .\-]?\d{1,4}[ .\-]?\d{1,9}$"
