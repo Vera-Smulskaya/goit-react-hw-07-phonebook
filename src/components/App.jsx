@@ -6,9 +6,17 @@ import Filter from './Filter/Filter';
 import Section from './Section/Section';
 import Title from './Title/Title';
 import { fetchContacts } from '../redux/contacts/contacts.reducer';
+import {
+  selectContacts,
+  selectError,
+  selectIsLoading,
+} from '../redux/contacts/contacts.selector';
+import Loader from './Loader/Loader';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contactsStore.contacts);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +31,9 @@ export const App = () => {
       </Section>
       <Section>
         <Filter />
-        {contacts.length > 0 && <ContactList />}
+        {error !== null && <p className="textError">{error}</p>}
+        {isLoading && <Loader />}
+        {contacts.length !== 0 && <ContactList />}
       </Section>
     </div>
   );
