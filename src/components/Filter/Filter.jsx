@@ -1,12 +1,15 @@
 import React from 'react';
 import css from './Filter.module.css';
-import { useDispatch } from 'react-redux';
-import { filters } from '../../redux/filter/filter.reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFilterTerm } from '../../redux/filter/filter.selector';
+import { setFilterTerm } from '../../redux/filter/filter.reducer';
 
-const Filter = ({ value }) => {
+const Filter = () => {
+  const filterTerm = useSelector(selectFilterTerm);
   const dispatch = useDispatch();
+
   const changeFilter = event => {
-    dispatch(filters(event.target.value));
+    dispatch(setFilterTerm(event.target.value));
   };
   return (
     <form className={css.filterContainer}>
@@ -16,7 +19,7 @@ const Filter = ({ value }) => {
           type="text"
           className={css.filterInput}
           name="filter"
-          value={value}
+          value={filterTerm}
           onChange={changeFilter}
         ></input>
       </label>

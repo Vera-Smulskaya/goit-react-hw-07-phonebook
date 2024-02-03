@@ -4,10 +4,11 @@ import Title from '../Title/Title';
 import ContactListItem from 'components/ContactListItem/ContactListItem';
 import { deleteContact } from '../../redux/contacts/contacts.reducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectFilterTerm } from '../../redux/filter/filter.selector';
 
 const ContactList = () => {
   const contacts = useSelector(state => state.contactsStore.contacts);
-  const filter = useSelector(state => state.filterStore.filter);
+  const filterTerm = useSelector(selectFilterTerm);
   const dispatch = useDispatch();
 
   const deletedContact = contactId => {
@@ -18,7 +19,7 @@ const ContactList = () => {
     return contacts.filter(
       contact =>
         typeof contact.name === 'string' &&
-        contact.name.toLowerCase().includes(filter.toLowerCase())
+        contact.name.toLowerCase().includes(filterTerm.toLowerCase())
     );
   };
 
